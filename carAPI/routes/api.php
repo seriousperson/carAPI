@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 // use App\Car;
 use App\Models\Car;
+use App\Http\Resources\CarResource;
+use App\Http\Controllers\CarsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,17 +18,6 @@ use App\Models\Car;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
-
-Route::get('cars/', function() {
-    return Car::all();
-});
-
-
-Route::get('cars?{colour}', function($colour) {
-    return Car::where("colour", $colour);
-});
-
+Route::middleware('auth:api')->get('/cars/all', [CarsController::class, 'index']);
+Route::middleware('auth:api')->get('/cars/{params}', [CarsController::class, 'show']);
